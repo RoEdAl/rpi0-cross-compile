@@ -1,0 +1,33 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "toolchainFile": "${sourceDir}/cmake/arm-linux-gnueabihf.toolchain.cmake",
+      "binaryDir": "${sourceDir}/$penv{DEVCONTAINER_BUILD_PREFIX}build",
+      "cacheVariables": {
+        "GREETING_MSG": {
+          "type": "STRING",
+          "value": "Hello, Raspberry Pi!"
+        }
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "configurePreset": "default",
+      "jobs": 0,
+      "verbose": true
+    }
+  ]
+}

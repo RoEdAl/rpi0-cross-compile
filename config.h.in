@@ -1,0 +1,9 @@
+/*
+    Automatically generated file.
+    Please do not edit manually.
+*/
+
+// clang-format off
+#cmakedefine HAVE_STDIO_H
+#cmakedefine GREETING_MSG "@GREETING_MSG@"
+// clang-format on
