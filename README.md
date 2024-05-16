@@ -7,7 +7,7 @@ This is demonstration of compiling executable for *Raspberry Pi* *Zero*/*1B*/*1B
 
 ## Background
 
-If you want to build executable or schared library for *Raspberry Pi* you can use *standard* `arm-linux-gnueabihf-gcc` cross-compiler from *Debian* or *Ubuntu*. Just proper compilation flags must be specified. You can use flags described [here](https://gist.github.com/fm4dd/c663217935dc17f0fc73c9c81b0aa845):
+Thoretically if you want to build executable or schared library for *Raspberry Pi* you can use *standard* `arm-linux-gnueabihf-gcc` cross-compiler from *Debian* or *Ubuntu*. Just proper compilation flags should be specified. You can use flags described [here](https://gist.github.com/fm4dd/c663217935dc17f0fc73c9c81b0aa845):
 
 ```sh
 arm-linux-gnueabihf-gcc -mcpu=arm1176jzf-s -mfloat-abi=hard -mfpu=vfp -o main main.c
@@ -26,7 +26,7 @@ This issue can be easly fixed just by adding `-marm` option:
 arm-linux-gnueabihf-gcc -marm -mcpu=arm1176jzf-s -mfloat-abi=hard -mfpu=vfp -o main main.c
 ```
 
-Now executable is created but if you try to run it on **real hardware** application just segfaults:
+Now executable gets created but if you try to run it on **real hardware** application just segfaults:
 
 ```sh
 ./main
@@ -86,6 +86,6 @@ The core difference is `Tag_CPU_arch`. `v6` is an expected value. So binary is c
 This demo code demostrates how to build binary with proper CPU architecture. In general you have to:
 
 * prepare SYSROOT from *Raspberry Pi OS*,
-* fix so-salled *startup* objects.
+* fix so-called *startup* objects.
 
 More information you can find on Wiki pages of this project.

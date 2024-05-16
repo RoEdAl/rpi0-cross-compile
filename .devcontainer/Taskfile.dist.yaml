@@ -65,7 +65,7 @@ tasks:
       - echo {{base .CRT_OBJ}} ⟶ {{.GCC_FILE}}
       - dpkg-divert --quiet --rename {{.GCC_FILE}}
 
-  fix-crt-startup-*:
+  fix-gcc-startup-*:
     desc: Fix startup files
     vars:
       TOOLCHAIN: '{{index .MATCH 0}}'

@@ -37,4 +37,4 @@ COPY Taskfile.dist.yaml /home/vscode/Taskfile.yaml
 RUN --network=none --mount=type=bind,from=rpi-debian,target=/home/vscode/cache task -d /home/vscode rpi-sysroot
 
 USER root
-RUN --network=none --mount=type=bind,from=rpi-debian,target=/home/vscode/cache task -d /home/vscode fix-crt-startup-arm-linux-gnueabihf
+RUN --network=none --mount=type=bind,from=rpi-debian,target=/home/vscode/cache task -d /home/vscode fix-gcc-startup-arm-linux-gnueabihf
