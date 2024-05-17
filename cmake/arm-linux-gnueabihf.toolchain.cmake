@@ -70,8 +70,11 @@ set(CMAKE_STAGING_PREFIX ${sysroot})
 
 # paths relative to SYSROOT
 set_sysroot_cxx_standard_include_directories(
+    /usr/local/include/${triple}
     /usr/local/include
+    /usr/include/${triple}
     /usr/include
+    /include/${triple}
     /include
 )
 init_sysroot_linker_search_paths(
