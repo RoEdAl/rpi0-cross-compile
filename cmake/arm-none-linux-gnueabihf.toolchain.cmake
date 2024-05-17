@@ -66,15 +66,17 @@ endfunction()
 
 # ---------------------------------------------------------------
 
-
 set_rpi_cxx_init_flags(-marm -march=armv6+fp -mfpu=vfp -mfloat-abi=hard -mtune=arm1176jzf-s)
 set(CMAKE_SYSROOT ${sysroot})
 set(CMAKE_STAGING_PREFIX ${sysroot})
 
 # paths relative to SYSROOT
 set_sysroot_cxx_standard_include_directories(
+    /usr/local/include/${btriple}
     /usr/local/include
+    /usr/include/${btriple}
     /usr/include
+    /include/${btriple}
     /include
 )
 init_sysroot_linker_search_paths(
