@@ -91,4 +91,4 @@ This demo code demostrates how to build binary with proper CPU architecture. In 
 * prepare SYSROOT from *Raspberry Pi OS*,
 * fix so-called *startup* objects.
 
-More information you can find on Wiki pages of this project.
+More information you can find on [Wiki pages](//github.com/RoEdAl/rpi0-cross-compile/wiki) of this project.
