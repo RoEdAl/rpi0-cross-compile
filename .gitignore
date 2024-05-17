@@ -5,4 +5,4 @@ install/
 package/
 hello-world
 hello-world.o
-
+qemu*.core

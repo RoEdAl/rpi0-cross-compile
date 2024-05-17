@@ -1,6 +1,6 @@
 # [DEMO] Building executable for *Raspberry Pi* Zero/1B/1B+ using `gcc-arm-linux-gnueabihf` cross compiler
 
-This is demonstration of compiling executable for *Raspberry Pi* *Zero*/*1B*/*1B+* using *standard* `gcc-arm-linux-gnueabihf` cross-compiler on Debian or Ubuntu. No additional tollchains are required.
+This is demonstration of compiling executable for *Raspberry Pi* *Zero*/*1B*/*1B+* using *standard* `gcc-arm-linux-gnueabihf` cross-compiler on Debian or Ubuntu. No additional toolchains are required.
 
 > [!IMPORTANT]
 > This demo is intended to use in *dockerized* environment. In *VS Code* just reopen this repo in container. `devcontainer.json` is provided.

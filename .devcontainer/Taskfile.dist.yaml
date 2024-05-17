@@ -4,7 +4,7 @@ output: prefixed
 
 vars:
   SYSROOT: '/home/vscode/sysroot'
-  RPI_ROOT: '/home/vscode/cache'
+  RPIROOT: '/home/vscode/cache'
 
 tasks:
   sysroot-lib:
@@ -37,17 +37,27 @@ tasks:
           SYMLINK: '{{.ITEM}}'
 
   rpi-sysroot:
-    desc: Prepare Raspberry Pi SysRoot
+    desc: Prepare Raspberry Pi SYSROOT
+    summary: |
+      Prepare Raspberry Pi SYSROOT
+
+      SYSROOT prepared this way works with gcc-arm-linux-gnueabihf cross-compiler
+      and ARM GNU Toolchain (previously known as Linaro) one.
+      "gold" linker is supported too.
+
+      * Libraries are accessible via $SYSROOT/usr/lib and $SYSROOT/usr/lib/<arch> paths.
+      * All object files are located in /usr/lib (/lib) folder.
+      * All symlinks (relative and absolute) are fixed.
     preconditions:
-      - test -d {{.RPI_ROOT}}
+      - test -d {{.RPIROOT}}
     cmds:
       - mkdir -p {{.SYSROOT}}/usr
-      - cp -a {{.RPI_ROOT}}/usr/lib/arm-linux-gnueabihf {{.SYSROOT}}/usr/
+      - cp -a {{.RPIROOT}}/usr/lib/arm-linux-gnueabihf {{.SYSROOT}}/usr/
       - mv {{.SYSROOT}}/usr/arm-linux-gnueabihf {{.SYSROOT}}/usr/lib
       - mkdir -p {{.SYSROOT}}/usr/lib/gcc
-      - cp -a {{.RPI_ROOT}}/usr/lib/gcc/arm-linux-gnueabihf/*/* {{.SYSROOT}}/usr/lib/gcc
+      - cp -a {{.RPIROOT}}/usr/lib/gcc/arm-linux-gnueabihf/*/* {{.SYSROOT}}/usr/lib/gcc
       - mv {{.SYSROOT}}/usr/lib/gcc/*.o {{.SYSROOT}}/usr/lib/
-      - cp -a {{.RPI_ROOT}}/usr/include {{.SYSROOT}}/usr/
+      - cp -a {{.RPIROOT}}/usr/include {{.SYSROOT}}/usr/
       - ln -sr {{.SYSROOT}}/usr/lib {{.SYSROOT}}/usr/lib/arm-linux-gnueabihf
       - ln -sr {{.SYSROOT}}/usr/lib {{.SYSROOT}}/lib
       - ln -sr {{.SYSROOT}}/usr/include {{.SYSROOT}}/include
