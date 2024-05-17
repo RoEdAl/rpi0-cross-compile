@@ -57,11 +57,6 @@ function(set_linker_init_flags)
     endforeach()
 endfunction()
 
-function(init_linker_search_paths)
-    list(TRANSFORM ARGV PREPEND "-L" OUTPUT_VARIABLE lopts)
-    set_linker_init_flags(${lopts})
-endfunction()
-
 function(init_sysroot_linker_search_paths)
     list(TRANSFORM ARGV PREPEND "-L=" OUTPUT_VARIABLE lopts)
     set_linker_init_flags(${lopts})
@@ -75,11 +70,8 @@ set(CMAKE_STAGING_PREFIX ${sysroot})
 
 # paths relative to SYSROOT
 set_sysroot_cxx_standard_include_directories(
-    /usr/local/include/${btriple}
     /usr/local/include
-    /usr/include/${btriple}
     /usr/include
-    /include/${btriple}
     /include
 )
 init_sysroot_linker_search_paths(
@@ -88,10 +80,9 @@ init_sysroot_linker_search_paths(
     /usr/lib/gcc
     /lib
 )
-set(CMAKE_CROSSCOMPILING_EMULATOR /usr/bin/qemu-arm-static -L ${sysroot} CACHE INTERNAL "")
+set(CMAKE_CROSSCOMPILING_EMULATOR /usr/bin/qemu-arm-static -cpu arm1176 -L ${sysroot} CACHE INTERNAL "")
 
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
-

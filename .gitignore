@@ -3,3 +3,6 @@ build/
 devcontainer-build/
 install/
 package/
+hello-world
+hello-world.o
+

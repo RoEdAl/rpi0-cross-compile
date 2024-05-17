@@ -10,20 +10,22 @@ This is demonstration of compiling executable for *Raspberry Pi* *Zero*/*1B*/*1B
 Thoretically if you want to build executable or schared library for *Raspberry Pi* you can use *standard* `arm-linux-gnueabihf-gcc` cross-compiler from *Debian* or *Ubuntu*. Just proper compilation flags should be specified. You can use flags described [here](https://gist.github.com/fm4dd/c663217935dc17f0fc73c9c81b0aa845):
 
 ```sh
-arm-linux-gnueabihf-gcc -mcpu=arm1176jzf-s -mfloat-abi=hard -mfpu=vfp -o main main.c
+arm-linux-gnueabihf-gcc -mcpu=arm1176jzf-s -mfloat-abi=hard -mfpu=vfp -o hello-world hello-world.c
 ```
 
 but compiler generates error:
 
 ```sh
-main.c: In function ‘main’:
-main.c:11:5: sorry, unimplemented: Thumb-1 ‘hard-float’ VFP ABI
+hello-world.c: In function ‘main’:
+hello-world.c:3:6: sorry, unimplemented: Thumb-1 hard-float VFP ABI
+    3 | void main()
+      |      ^~~~
 ```
 
 This issue can be easly fixed just by adding `-marm` option:
 
 ```sh
-arm-linux-gnueabihf-gcc -marm -mcpu=arm1176jzf-s -mfloat-abi=hard -mfpu=vfp -o main main.c
+arm-linux-gnueabihf-gcc -marm -mcpu=arm1176jzf-s -mfloat-abi=hard -mfpu=vfp -o hello-world hello-world.c
 ```
 
 Now executable gets created but if you try to run it on **real hardware** application just segfaults:
@@ -36,7 +38,7 @@ Segmentation fault
 Now things gets complicated. Let's examine generated binary a bit:
 
 ```sh
-$ readelf -A main
+$ arm-linux-gnueabihf-readelf -A hello-world
 Attribute Section: aeabi
 File Attributes
   Tag_CPU_name: "7-A"
@@ -55,9 +57,10 @@ File Attributes
   Tag_ABI_enum_size: int
   Tag_ABI_VFP_args: VFP registers
   Tag_CPU_unaligned_access: v6
+  Tag_Virtualization_use: TrustZone
 ```
 
-and this is output of similar command executed on *Raspberry Pi OS* (*Raspbian*):
+and below is output of similar command executed on *Raspberry Pi OS* (*Raspbian*):
 
 ```sh
 pi@raspberrypi:~ $ readelf -A /bin/bash
@@ -81,7 +84,7 @@ File Attributes
 
 ```
 
-The core difference is `Tag_CPU_arch`. `v6` is an expected value. So binary is creaded for wrong CPU architecture. Generated code works fine on newer models of *Raspberry Pi* but is incompatible with *RPi Zero/1B/1B+* models with older CPU (SoC).
+The core difference is `Tag_CPU_arch`. `v6` is an expected value. So binary was created for wrong CPU architecture. Generated code works fine on newer models of *Raspberry Pi* but it is incompatible with *RPi Zero/1B/1B+* models with older CPU (SoC).
 
 This demo code demostrates how to build binary with proper CPU architecture. In general you have to:
 
