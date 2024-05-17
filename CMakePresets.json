@@ -6,7 +6,7 @@
   },
   "configurePresets": [
     {
-      "name": "default",
+      "name": "arm-linux-gnueabihf",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -20,12 +20,34 @@
           "value": "Hello, Raspberry Pi!"
         }
       }
+    },
+    {
+      "name": "arm-none-linux-gnueabihf",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "toolchainFile": "${sourceDir}/cmake/arm-none-linux-gnueabihf.toolchain.cmake",
+      "binaryDir": "${sourceDir}/$penv{DEVCONTAINER_BUILD_PREFIX}build",
+      "cacheVariables": {
+        "GREETING_MSG": {
+          "type": "STRING",
+          "value": "Hello, ARM GNU Toolchain"
+        }
+      }
     }
   ],
   "buildPresets": [
     {
-      "name": "default",
-      "configurePreset": "default",
+      "name": "arm-linux-gnueabihf",
+      "configurePreset": "arm-linux-gnueabihf",
+      "jobs": 0,
+      "verbose": true
+    },
+    {
+      "name": "arm-none-linux-gnueabihf",
+      "configurePreset": "arm-none-linux-gnueabihf",
       "jobs": 0,
       "verbose": true
     }

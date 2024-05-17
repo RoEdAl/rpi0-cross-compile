@@ -87,3 +87,43 @@ tasks:
         vars:
           GCC_DRIVER: '{{.TOOLCHAIN}}-gcc'
           CRT_OBJ: '{{.ITEM}}'
+
+  rm-crt-obj:
+    internal: true
+    requiremets:
+      vars: [CRT_OBJ, GCC_DRIVER]
+    vars:
+      GCC_FILE:
+        sh: '{{.GCC_DRIVER}} -print-file-name={{base .CRT_OBJ}}'
+    cmds:
+      - rm {{.GCC_FILE}}
+
+  arm-gnu-toolchain-fix-startup-*:
+    internal: true
+    vars:
+      TOOLCHAIN: '{{index .MATCH 0}}'
+      GCC_DRIVER: '/home/vscode/{{.TOOLCHAIN}}/bin/{{.TOOLCHAIN}}-gcc'      
+      CRT_OBJS:
+        sh: find {{.SYSROOT}}/usr/lib -type f -name '*crt*.o'
+    cmds:
+      - for: {var: CRT_OBJS}
+        task: rm-crt-obj
+        vars:
+          GCC_DRIVER: '{{.GCC_DRIVER}}'
+          CRT_OBJ: '{{.ITEM}}'
+
+  arm-gnu-toolchain-extract-*:
+    internal: true
+    vars:
+      TOOLCHAIN: '{{index .MATCH 0}}'
+    dir: '/home/vscode/{{.TOOLCHAIN}}'
+    cmds:
+      - tar -xf /home/vscode/cache/arm-gnu-toolchain-{{.ARM_GNU_TOOLCHAIN_VER}}-x86_64-{{.TOOLCHAIN}}.tar.xz --strip-components=1
+
+  arm-gnu-toolchain-install-*:
+    desc: Install ARM GNU Toolchain
+    vars:
+      TOOLCHAIN: '{{index .MATCH 0}}'    
+    cmds:
+      - task: arm-gnu-toolchain-extract-{{.TOOLCHAIN}}
+      - task: arm-gnu-toolchain-fix-startup-{{.TOOLCHAIN}}
