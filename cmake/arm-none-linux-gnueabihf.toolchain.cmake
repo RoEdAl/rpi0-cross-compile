@@ -48,7 +48,14 @@ function(set_cxx_standard_include_directories)
 endfunction()
 
 function(set_sysroot_cxx_standard_include_directories)
-    list(TRANSFORM ARGV PREPEND "=" OUTPUT_VARIABLE incs)
+    set(incs)
+    foreach(inc IN LISTS ARGV)
+        cmake_path(APPEND sysroot ${inc} OUTPUT_VARIABLE incdir)
+        if(NOT IS_DIRECTORY ${incdir})
+            continue()
+        endif()
+        list(APPEND incs "=/${inc}")
+    endforeach()
     set_cxx_standard_include_directories(${incs})
 endfunction()
 
@@ -60,7 +67,14 @@ function(set_linker_init_flags)
 endfunction()
 
 function(init_sysroot_linker_search_paths)
-    list(TRANSFORM ARGV PREPEND "-L=" OUTPUT_VARIABLE lopts)
+    set(lopts)
+    foreach(dir IN LISTS ARGV)
+        cmake_path(APPEND sysroot ${dir} OUTPUT_VARIABLE libdir)
+        if(NOT IS_DIRECTORY ${libdir})
+            continue()
+        endif()
+        list(APPEND lopts "-L=/${dir}")
+    endforeach()
     set_linker_init_flags(${lopts})
 endfunction()
 
@@ -72,18 +86,18 @@ set(CMAKE_STAGING_PREFIX ${sysroot})
 
 # paths relative to SYSROOT
 set_sysroot_cxx_standard_include_directories(
-    /usr/local/include/${btriple}
-    /usr/local/include
-    /usr/include/${btriple}
-    /usr/include
-    /include/${btriple}
-    /include
+    usr/local/include/${btriple}
+    usr/local/include
+    usr/include/${btriple}
+    usr/include
+    include/${btriple}
+    include
 )
 init_sysroot_linker_search_paths(
-    /usr/local/lib
-    /usr/lib
-    /usr/lib/gcc
-    /lib
+    usr/local/lib
+    usr/lib
+    usr/lib/gcc
+    lib
 )
 
 set(CMAKE_CROSSCOMPILING_EMULATOR /usr/bin/qemu-arm-static -cpu arm1176 -L ${sysroot} CACHE INTERNAL "")
