@@ -9,8 +9,9 @@ set(CMAKE_SYSTEM_PROCESSOR          arm)
 set(CPACK_PACKAGE_ARCHITECTURE      armhf)
 set(triple                          arm-none-linux-gnueabihf)
 set(btriple                         arm-linux-gnueabihf)
-set(gccbase                          /home/vscode/${triple})
-set(sysroot                         /home/vscode/sysroot)
+
+file(REAL_PATH "~/${triple}" gccbase EXPAND_TILDE)
+file(REAL_PATH "~/sysroot" sysroot EXPAND_TILDE)
 
 set(CMAKE_AR                        ${gccbase}/bin/${triple}-ar${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_ASM_COMPILER              ${gccbase}/bin/${triple}-gcc${CMAKE_EXECUTABLE_SUFFIX})

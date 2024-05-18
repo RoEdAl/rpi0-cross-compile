@@ -1,7 +1,7 @@
 #
 # arch-specific
 #
-CMAKE_MINIMUM_REQUIRED(VERSION 3.20)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.21)
 
 FUNCTION(CheckArchSpecificTag TagName TagValue)
     IF(${TagName} STREQUAL Tag_CPU_name)

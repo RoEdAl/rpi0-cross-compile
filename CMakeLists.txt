@@ -2,7 +2,7 @@
 # rpi0-cross-compile
 #
 
-CMAKE_MINIMUM_REQUIRED(VERSION 3.20)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.21)
 PROJECT(rpi0-cross-compile C)
 INCLUDE(CheckIncludeFile)
 

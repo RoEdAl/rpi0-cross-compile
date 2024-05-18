@@ -10,7 +10,8 @@ set(CMAKE_SYSTEM_NAME               Linux)
 set(CMAKE_SYSTEM_PROCESSOR          arm)
 set(CPACK_PACKAGE_ARCHITECTURE      armhf)
 set(triple                          arm-linux-gnueabihf)
-set(sysroot                         /home/vscode/sysroot)
+
+file(REAL_PATH "~/sysroot" sysroot EXPAND_TILDE)
 
 set(CMAKE_AR                        ${triple}-ar${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_ASM_COMPILER              ${triple}-gcc${CMAKE_EXECUTABLE_SUFFIX})
