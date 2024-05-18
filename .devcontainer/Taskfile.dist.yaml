@@ -31,7 +31,8 @@ tasks:
       SYMLIBS:
         sh: find -P {{.SYSROOT}}/usr/lib -type l -name 'lib*.so*'
     cmds:
-      - for: { var: SYMLIBS }
+      - for:
+          var: SYMLIBS
         task: sysroot-lib
         vars:
           SYMLINK: '{{.ITEM}}'
@@ -45,9 +46,9 @@ tasks:
       and ARM GNU Toolchain (previously known as Linaro) one.
       "gold" linker is supported too.
 
-      * Libraries are accessible via $SYSROOT/usr/lib and $SYSROOT/usr/lib/<arch> paths.
+      * Libraries are accessible via $SYSROOT/lib, $SYSROOT/lib/arm-linux-gnueabihf, $SYSROOT/usr/lib and $SYSROOT/usr/lib/arm-linux-gnueabihf paths.
       * All object files are located in /usr/lib (/lib) folder.
-      * All symlinks (relative and absolute) are fixed.
+      * All symlinks are fixed.
     preconditions:
       - test -d {{.RPIROOT}}
     cmds:
@@ -82,7 +83,8 @@ tasks:
       CRT_OBJS:
         sh: find {{.SYSROOT}}/usr/lib -type f -name '*crt*.o'
     cmds:
-      - for: {var: CRT_OBJS}
+      - for: 
+          var: CRT_OBJS
         task: link-crt-obj
         vars:
           GCC_DRIVER: '{{.TOOLCHAIN}}-gcc'
@@ -106,7 +108,8 @@ tasks:
       CRT_OBJS:
         sh: find {{.SYSROOT}}/usr/lib -type f -name '*crt*.o'
     cmds:
-      - for: {var: CRT_OBJS}
+      - for:
+          var: CRT_OBJS
         task: rm-crt-obj
         vars:
           GCC_DRIVER: '{{.GCC_DRIVER}}'
