@@ -5,6 +5,8 @@ This is demonstration of compiling executable for *Raspberry Pi* *Zero*/*1B*/*1B
 > [!IMPORTANT]
 > This demo is intended to use in *dockerized* environment. In *VS Code* just reopen this repo in container. `devcontainer.json` is provided.
 
+As a bonus this code also show you how to use external `arm-none-linux-gnueabihf` cross-compiler from [ARM GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain).
+
 ## Background
 
 Thoretically if you want to build executable or schared library for *Raspberry Pi* you can use *standard* `arm-linux-gnueabihf-gcc` cross-compiler from *Debian* or *Ubuntu*. Just proper compilation flags should be specified. You can use flags described [here](https://gist.github.com/fm4dd/c663217935dc17f0fc73c9c81b0aa845):
@@ -22,7 +24,7 @@ hello-world.c:3:6: sorry, unimplemented: Thumb-1 hard-float VFP ABI
       |      ^~~~
 ```
 
-This issue can be easly fixed just by adding `-marm` option:
+This issue can be easly fixed just by adding `-marm` option (`-mthumb` is a default in modern compilers):
 
 ```sh
 arm-linux-gnueabihf-gcc -marm -mcpu=arm1176jzf-s -mfloat-abi=hard -mfpu=vfp -o hello-world hello-world.c
@@ -88,7 +90,7 @@ The core difference is `Tag_CPU_arch`. `v6` is an expected value. So binary was 
 
 This demo code demostrates how to build binary with proper CPU architecture. In general you have to:
 
-* prepare SYSROOT from *Raspberry Pi OS*,
-* fix so-called *startup* objects.
+* prepare *sysroot* from *Raspberry Pi OS*,
+* fix so-called *startfiles*.
 
 More information you can find on [Wiki pages](//github.com/RoEdAl/rpi0-cross-compile/wiki) of this project.
