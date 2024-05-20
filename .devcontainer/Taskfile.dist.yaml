@@ -64,7 +64,7 @@ tasks:
       - ln -sr {{.SYSROOT}}/usr/include {{.SYSROOT}}/include
       - task: fix-lib-symlinks
 
-  link-crt-obj:
+  divert-crt-obj:
     internal: true
     requiremets:
       vars: [CRT_OBJ, GCC_DRIVER]
@@ -85,12 +85,12 @@ tasks:
     cmds:
       - for: 
           var: CRT_OBJS
-        task: link-crt-obj
+        task: divert-crt-obj
         vars:
           GCC_DRIVER: '{{.TOOLCHAIN}}-gcc'
           CRT_OBJ: '{{.ITEM}}'
 
-  rm-crt-obj:
+  rename-crt-obj:
     internal: true
     requiremets:
       vars: [CRT_OBJ, GCC_DRIVER]
@@ -98,7 +98,7 @@ tasks:
       GCC_FILE:
         sh: '{{.GCC_DRIVER}} -print-file-name={{base .CRT_OBJ}}'
     cmds:
-      - rm {{.GCC_FILE}}
+      - mv {{.GCC_FILE}} {{.GCC_FILE}}.distrib
 
   arm-gnu-toolchain-fix-startup-*:
     internal: true
@@ -110,7 +110,7 @@ tasks:
     cmds:
       - for:
           var: CRT_OBJS
-        task: rm-crt-obj
+        task: rename-crt-obj
         vars:
           GCC_DRIVER: '{{.GCC_DRIVER}}'
           CRT_OBJ: '{{.ITEM}}'

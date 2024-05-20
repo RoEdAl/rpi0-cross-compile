@@ -91,6 +91,6 @@ The core difference is `Tag_CPU_arch`. `v6` is an expected value. So binary was 
 This demo code demostrates how to build binary with proper CPU architecture. In general you have to:
 
 * prepare *sysroot* from *Raspberry Pi OS*,
-* fix so-called *startfiles*.
+* fix startup files.
 
 More information you can find on [Wiki pages](//github.com/RoEdAl/rpi0-cross-compile/wiki) of this project.
