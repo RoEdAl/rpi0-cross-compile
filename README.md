@@ -1,15 +1,18 @@
 # [DEMO] Building executable for *Raspberry Pi* Zero/1B/1B+ using `gcc-arm-linux-gnueabihf` cross compiler
 
-This is demonstration of compiling executable for *Raspberry Pi* *Zero*/*1B*/*1B+* using *standard* `gcc-arm-linux-gnueabihf` cross-compiler on Debian or Ubuntu. No additional toolchains are required.
+This is demonstration of compiling executable for *Raspberry Pi* *Zero*/*1B*/*1B+* using *standard* `gcc-arm-linux-gnueabihf` cross-compiler on Debian or Ubuntu without any 3-rd party toolchain.
 
 > [!IMPORTANT]
 > This demo is intended to use in *dockerized* environment. In *VS Code* just reopen this repo in container. `devcontainer.json` is provided.
 
-As a bonus this code also show you how to use external `arm-none-linux-gnueabihf` cross-compiler from [ARM GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain).
+As a bonus this code also show you how to use external `arm-none-linux-gnueabihf` cross-compiler from [ARM GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
+if you need a more recent version of GCC.
 
 ## Background
 
-Thoretically if you want to build executable or schared library for *Raspberry Pi* you can use *standard* `arm-linux-gnueabihf-gcc` cross-compiler from *Debian* or *Ubuntu*. Just proper compilation flags should be specified. You can use flags described [here](https://gist.github.com/fm4dd/c663217935dc17f0fc73c9c81b0aa845):
+Thoretically if you want to build executable or schared library for *Raspberry Pi* you can use *standard* `arm-linux-gnueabihf-gcc` cross-compiler from *Debian* or *Ubuntu*.
+Just proper compilation flags should be specified.
+You can use flags described [here](https://gist.github.com/fm4dd/c663217935dc17f0fc73c9c81b0aa845):
 
 ```sh
 arm-linux-gnueabihf-gcc -mcpu=arm1176jzf-s -mfloat-abi=hard -mfpu=vfp -o hello-world hello-world.c
@@ -33,11 +36,11 @@ arm-linux-gnueabihf-gcc -marm -mcpu=arm1176jzf-s -mfloat-abi=hard -mfpu=vfp -o h
 Now executable gets created but if you try to run it on **real hardware** application just segfaults:
 
 ```sh
-./main
+pi@raspberrypi:~ $ ./hello-world
 Segmentation fault
 ```
 
-Now things gets complicated. Let's examine generated binary a bit:
+Now things gets complicated. Let's examine generated binary a bit using [readelf](//man.archlinux.org/man/readelf.1) utility:
 
 ```sh
 $ arm-linux-gnueabihf-readelf -A hello-world
@@ -86,7 +89,7 @@ File Attributes
 
 ```
 
-The core difference is `Tag_CPU_arch`. `v6` is an expected value. So binary was created for wrong CPU architecture. Generated code works fine on newer models of *Raspberry Pi* but it is incompatible with *RPi Zero/1B/1B+* models with older CPU (SoC).
+The core difference is `Tag_CPU_arch`. `v6` is an expected value. So binary has been created for wrong CPU architecture. Generated code works fine on newer models of *Raspberry Pi* but it is incompatible with *RPi Zero/1B/1B+* models with older CPU (SoC).
 
 This demo code demostrates how to build binary with proper CPU architecture. In general you have to:
 
