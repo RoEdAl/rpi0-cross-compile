@@ -24,9 +24,14 @@ apt-get -qq update -y
 apt-get -qq upgrade -y --no-install-recommends
 EOF
 
+FROM scratch AS dl-llvm
+ADD --chmod=644 https://apt.llvm.org/llvm-snapshot.gpg.key .
+
 FROM mcr.microsoft.com/devcontainers/base:bookworm
 ARG DEBIAN_FRONTEND
 ARG ARM_GNU_TOOLCHAIN_VER
+COPY --from=dl-llvm llvm-snapshot.gpg.key /etc/apt/trusted.gpg.d/apt.llvm.org.asc
+COPY llvm.list /etc/apt/sources.list.d/llvm.list
 RUN --network=none --mount=type=bind,from=dl-task,target=/mnt/download dpkg --install /mnt/download/task_linux_amd64.deb
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked <<-EOF
@@ -35,7 +40,9 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 apt-get -qq update -y
 apt-get -qq upgrade -y --no-install-recommends
 # dpkg --add-architecture armhf
-apt-get -qq install -y --no-install-recommends xz-utils cmake gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf qemu-user-static
+apt-get -qq install -y --no-install-recommends xz-utils qemu-user-static cmake \
+    gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf \
+    clang lld
 EOF
 
 USER vscode

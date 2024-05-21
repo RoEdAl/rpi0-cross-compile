@@ -36,6 +36,22 @@
           "value": "Hello, ARM GNU Toolchain"
         }
       }
+    },
+    {
+      "name": "armv6-unknown-linux-gnueabihf",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "toolchainFile": "${sourceDir}/cmake/armv6-unknown-linux-gnueabihf.toolchain.cmake",
+      "binaryDir": "${sourceDir}/$penv{DEVCONTAINER_BUILD_PREFIX}build",
+      "cacheVariables": {
+        "GREETING_MSG": {
+          "type": "STRING",
+          "value": "Hello, CLang"
+        }
+      }
     }
   ],
   "buildPresets": [
@@ -48,6 +64,12 @@
     {
       "name": "arm-none-linux-gnueabihf",
       "configurePreset": "arm-none-linux-gnueabihf",
+      "jobs": 0,
+      "verbose": true
+    },
+    {
+      "name": "armv6-unknown-linux-gnueabihf",
+      "configurePreset": "armv6-unknown-linux-gnueabihf",
       "jobs": 0,
       "verbose": true
     }

@@ -11,9 +11,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.21)
 #
 IF(CMAKE_ARGV3)
     IF(${CMAKE_ARGV3} STREQUAL arm-linux-gnueabihf)
-        SET(GCC_DRIVER "arm-linux-gnueabihf-gcc")
+        SET(GCC_DRIVER arm-linux-gnueabihf-gcc)
     ELSEIF(${CMAKE_ARGV3} STREQUAL arm-none-linux-gnueabihf)
         FILE(REAL_PATH "~/arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gcc" GCC_DRIVER EXPAND_TILDE)
+    ELSEIF(${CMAKE_ARGV3} STREQUAL armv6-unknown-linux-gnueabihf)
+        SET(GCC_DRIVER clang)
     ELSE()
         SET(GCC_DRIVER ${CMAKE_ARGV3})
     ENDIF()
@@ -78,13 +80,13 @@ FUNCTION(ProcessDirList Category DirList)
     SET(DIRS)
     FOREACH(l IN LISTS DIRS_RAW)
         IF("${l}" MATCHES "^=/(.+)$")
-            IF(IS_DIRECTORY "${CMAKE_SYSROOT}${CMAKE_MATCH_1}")
-                MESSAGE(VERBOSE "[${Category}][sysroot][append] ${l}")
-                SET(sl "${CMAKE_SYSROOT}${CMAKE_MATCH_1}")
+            IF(IS_DIRECTORY "/${CMAKE_MATCH_1}")
+                MESSAGE(VERBOSE "[${Category}][append] ${l}")
+                SET(sl "/${CMAKE_MATCH_1}")
                 CMAKE_PATH(NORMAL_PATH sl OUTPUT_VARIABLE rl)
                 LIST(APPEND DIRS "${rl}")
             ELSE()
-                MESSAGE(VERBOSE "[${Category}][sysroot][skip]: ${l}")
+                MESSAGE(VERBOSE "[${Category}][skip]: ${l}")
             ENDIF()
         ELSEIF(IS_DIRECTORY "${l}")
             MESSAGE(VERBOSE "[${Category}][append] ${l}")
@@ -132,12 +134,17 @@ ENDFUNCTION()
 FUNCTION(GccMultiarch GccDriver)
     EXECUTE_PROCESS(
         COMMAND ${GccDriver} -print-multiarch
+        RESULT_VARIABLE GCC_MULTIARCH_RES
         OUTPUT_VARIABLE GCC_MULTIARCH
         OUTPUT_STRIP_TRAILING_WHITESPACE
-        COMMAND_ERROR_IS_FATAL ANY
+        ERROR_QUIET
         TIMEOUT 15
     )
-    SET(GCC_MULTIARCH "${GCC_MULTIARCH}" PARENT_SCOPE)
+    IF(${GCC_MULTIARCH_RES} EQUAL 0)
+        SET(GCC_MULTIARCH "${GCC_MULTIARCH}" PARENT_SCOPE)
+    ELSE()
+        SET(GCC_MULTIARCH PARENT_SCOPE)
+    ENDIF()
 ENDFUNCTION()
 
 FUNCTION(ScanDirForStartFiles SearchPath)

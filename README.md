@@ -5,8 +5,11 @@ This is demonstration of compiling executable for *Raspberry Pi* *Zero*/*1B*/*1B
 > [!IMPORTANT]
 > This demo is intended to use in *dockerized* environment. In *VS Code* just reopen this repo in container. `devcontainer.json` is provided.
 
-As a bonus this code also show you how to use external `arm-none-linux-gnueabihf` cross-compiler from [ARM GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
+As a bonus this code also show you:
+
+* How to use external `arm-none-linux-gnueabihf` cross-compiler from [ARM GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
 if you need a more recent version of GCC.
+* How to properly use *CLang* cross-compiler (`armv6-unknown-linux-gnueabihf`) to generate binaries for *Raspberry Pi*.
 
 ## Background
 

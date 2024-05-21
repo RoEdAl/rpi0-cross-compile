@@ -10,7 +10,8 @@
 
 #include <stdio.h>
 
-void main()
+int main()
 {
   puts(GREETING_MSG);
+  return 0;
 }
