@@ -7,6 +7,7 @@
   "configurePresets": [
     {
       "name": "arm-linux-gnueabihf",
+      "displayName": "GCC for the armhf architecture",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -23,6 +24,7 @@
     },
     {
       "name": "arm-none-linux-gnueabihf",
+      "displayName": "ARM GNU Toolchain targeted to Raspberry Pi",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -39,6 +41,7 @@
     },
     {
       "name": "armv6-unknown-linux-gnueabihf",
+      "displayName": "CLang targeted to Raspberry Pi",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -57,21 +60,55 @@
   "buildPresets": [
     {
       "name": "arm-linux-gnueabihf",
+      "displayName": "GCC for the armhf architecture",
       "configurePreset": "arm-linux-gnueabihf",
       "jobs": 0,
       "verbose": true
     },
     {
       "name": "arm-none-linux-gnueabihf",
+      "displayName": "ARM GNU Toolchain targeted to Raspberry Pi",
       "configurePreset": "arm-none-linux-gnueabihf",
       "jobs": 0,
       "verbose": true
     },
     {
       "name": "armv6-unknown-linux-gnueabihf",
+      "displayName": "CLang targeted to Raspberry Pi",
       "configurePreset": "armv6-unknown-linux-gnueabihf",
       "jobs": 0,
       "verbose": true
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "common",
+      "hidden": true,
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "jobs": 0,
+        "timeout": 30
+      }
+    },
+    {
+      "name": "arm-linux-gnueabihf",
+      "displayName": "GCC for the armhf architecture",
+      "inherits": "common",
+      "configurePreset": "arm-linux-gnueabihf"
+    },
+    {
+      "name": "arm-none-linux-gnueabihf",
+      "displayName": "ARM GNU Toolchain targeted to Raspberry Pi",
+      "inherits": "common",
+      "configurePreset": "arm-none-linux-gnueabihf"
+    },
+    {
+      "name": "armv6-unknown-linux-gnueabihf",
+      "displayName": "CLang targeted to Raspberry Pi",
+      "inherits": "common",
+      "configurePreset": "armv6-unknown-linux-gnueabihf"
     }
   ]
 }

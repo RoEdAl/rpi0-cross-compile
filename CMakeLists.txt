@@ -5,6 +5,7 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.21)
 PROJECT(rpi0-cross-compile C)
 INCLUDE(CheckIncludeFile)
+INCLUDE(CTest)
 
 SET(GREETING_MSG "Hello, World!" CACHE STRING "Greeting message")
 
@@ -24,3 +25,13 @@ IF(CMAKE_CROSSCOMPILING)
         $<TARGET_FILE:rpi01>
     )
 ENDIF()
+
+IF(BUILD_TESTING)
+    ADD_TEST(NAME rpi01.execute COMMAND rpi01)
+    SET_TESTS_PROPERTIES(rpi01.execute PROPERTIES
+        PASS_REGULAR_EXPRESSION Hello
+        TIMEOUT 15
+        LABELS EXE
+    )
+ENDIF()
+
