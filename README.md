@@ -9,11 +9,11 @@ As a bonus this code also show you:
 
 * How to use external `arm-none-linux-gnueabihf` cross-compiler from [ARM GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
 if you need a more recent version of GCC.
-* How to properly use *CLang* cross-compiler (`armv6-unknown-linux-gnueabihf`) to generate binaries for *Raspberry Pi*.
+* How to properly use *CLang* cross-compiler (`armv6-unknown-linux-gnueabihf` target) to generate binaries for *Raspberry Pi*.
 
 ## Background
 
-Thoretically if you want to build executable or schared library for *Raspberry Pi* you can use *standard* `arm-linux-gnueabihf-gcc` cross-compiler from *Debian* or *Ubuntu*.
+Thoretically if you want to build executable or shared library for *Raspberry Pi* you can use *standard* `arm-linux-gnueabihf-gcc` cross-compiler from *Debian* or *Ubuntu*.
 Just proper compilation flags should be specified.
 You can use flags described [here](https://gist.github.com/fm4dd/c663217935dc17f0fc73c9c81b0aa845):
 
