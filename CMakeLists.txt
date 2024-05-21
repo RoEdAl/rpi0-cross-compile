@@ -19,7 +19,8 @@ IF(CMAKE_CROSSCOMPILING)
     ADD_CUSTOM_COMMAND(TARGET rpi01 POST_BUILD
         COMMAND ${CMAKE_COMMAND}
         -DCMAKE_READELF=${CMAKE_READELF}
-        -DMODULE_PATH=$<TARGET_FILE:rpi01>
         -P ${CMAKE_SOURCE_DIR}/cmake/arch-specific.cmake
+        $<TARGET_OBJECTS:rpi01>
+        $<TARGET_FILE:rpi01>
     )
 ENDIF()
