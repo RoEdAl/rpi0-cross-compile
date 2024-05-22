@@ -4,6 +4,7 @@
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.21)
 PROJECT(rpi0-cross-compile C)
+
 INCLUDE(CheckIncludeFile)
 INCLUDE(CTest)
 
@@ -34,4 +35,3 @@ IF(BUILD_TESTING)
         LABELS EXE
     )
 ENDIF()
-
