@@ -69,6 +69,13 @@ endfunction()
 
 function(init_sysroot_linker_search_paths)
     set(lopts)
+
+    file(GLOB SPECS_FILES LIST_DIRECTORIES false RELATIVE ${sysroot}/usr/lib "${sysroot}/usr/lib/${triple}-*-specs.txt")
+    foreach(s IN LISTS SPECS_FILES)
+        message(STATUS "[SPECS] ${s}")
+    endforeach()
+    list(TRANSFORM SPECS_FILES PREPEND "-specs=")
+
     foreach(dir IN LISTS ARGV)
         cmake_path(APPEND sysroot ${dir} OUTPUT_VARIABLE libdir)
         if(NOT IS_DIRECTORY ${libdir})
@@ -76,7 +83,7 @@ function(init_sysroot_linker_search_paths)
         endif()
         list(APPEND lopts "-L=/${dir}")
     endforeach()
-    set_linker_init_flags(${lopts})
+    set_linker_init_flags(${SPECS_FILES} ${lopts})
 endfunction()
 
 # ---------------------------------------------------------------
