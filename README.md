@@ -1,6 +1,6 @@
-# [DEMO] Building executable for *Raspberry Pi* Zero/1B/1B+ using `gcc-arm-linux-gnueabihf` cross compiler
+# [DEMO] Building executable for *Raspberry Pi* Zero/1B/1B+ using `gcc-arm-linux-gnueabihf` cross‑compiler
 
-This is demonstration of compiling executable for *Raspberry Pi* *Zero*/*1B*/*1B+* using *standard* `gcc-arm-linux-gnueabihf` cross-compiler on Debian or Ubuntu without any 3-rd party toolchain.
+This is demonstration of compiling executable for *Raspberry Pi* *Zero*/*1B*/*1B+* using *standard* `gcc-arm-linux-gnueabihf` cross‑compiler on Debian or Ubuntu.
 
 > [!IMPORTANT]
 > This demo is intended to use in *dockerized* environment. In *VS Code* just reopen this repo in container. `devcontainer.json` is provided.
@@ -9,7 +9,7 @@ As a bonus this code also show you:
 
 * How to use external `arm-none-linux-gnueabihf` cross-compiler from [ARM GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
 if you need a more recent version of GCC.
-* How to properly use *CLang* cross-compiler (`armv6-unknown-linux-gnueabihf` target) to generate binaries for *Raspberry Pi*.
+* How to properly use *CLang* compiler (`armv6-unknown-linux-gnueabihf` target) to generate binaries for *Raspberry Pi*.
 
 ## Background
 
@@ -92,11 +92,12 @@ File Attributes
 
 ```
 
-The core difference is `Tag_CPU_arch`. `v6` is an expected value. So binary has been created for wrong CPU architecture. Generated code works fine on newer models of *Raspberry Pi* but it is incompatible with *RPi Zero/1B/1B+* models with older CPU (SoC).
+The core difference is `Tag_CPU_arch`. `v6` is an expected value. So binary has been created for wrong CPU architecture.
+Generated code works fine on newer models of *Raspberry Pi* but it is incompatible with *RPi Zero/1B/1B+* models with older CPU (SoC).
 
 This demo code demostrates how to build binary with proper CPU architecture. In general you have to:
 
 * prepare *sysroot* from *Raspberry Pi OS*,
-* fix startup files.
+* fix *startup files*.
 
 More information you can find on [Wiki pages](//github.com/RoEdAl/rpi0-cross-compile/wiki) of this project.
