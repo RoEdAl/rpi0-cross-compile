@@ -1,0 +1,19 @@
+version: '3'
+
+includes:
+  arm-linux-gnueabihf:
+    taskfile: task.d/arm-linux-gnueabihf
+    vars:
+      TOOLCHAIN: arm-linux-gnueabihf
+  arm-none-linux-gnueabihf:
+    aliases:
+      - arm-gnu-toolchain
+    taskfile: task.d/arm-none-linux-gnueabihf
+    vars:
+      TOOLCHAIN: arm-none-linux-gnueabihf
+  armv6-unknown-linux-gnueabihf:
+    aliases:
+      - clang
+    taskfile: task.d/armv6-unknown-linux-gnueabihf
+    vars:
+      TOOLCHAIN: armv6-unknown-linux-gnueabihf

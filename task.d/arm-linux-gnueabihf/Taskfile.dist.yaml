@@ -1,0 +1,22 @@
+version: '3'
+
+tasks:
+  test:
+    desc: Perform test(s)
+    cmds:
+      - ctest --preset={{.TOOLCHAIN}} {{.CLI_ARGS}}
+
+  get-search-dirs:
+    desc: Get search directories
+    cmds:
+      - cmake -P cmake/gcc-search-dirs.cmake {{.TOOLCHAIN}} {{.CLI_ARGS}}
+
+  extract-crt-specs:
+    desc: Extract and prepare startfile and endfile spces
+    cmds:
+      - cmake -P cmake/extract-crt-specs.cmake {{.TOOLCHAIN}} {{.CLI_ARGS}}
+
+  process-crt-files:
+    desc: Process crt object files
+    cmds:
+      - cmake -P cmake/process-crt-files.cmake {{.TOOLCHAIN}} {{.CLI_ARGS}}

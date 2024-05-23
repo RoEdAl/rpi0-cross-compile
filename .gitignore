@@ -6,3 +6,6 @@ package/
 hello-world
 hello-world.o
 qemu*.core
+Taskfile.yaml
+Taskfile.yml
+
