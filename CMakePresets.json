@@ -6,13 +6,28 @@
   },
   "configurePresets": [
     {
-      "name": "arm-linux-gnueabihf",
-      "displayName": "GCC for the armhf architecture",
+      "name": "common",
+      "hidden": true,
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Linux"
       },
+      "cacheVariables": {
+        "CMAKE_C_VISIBILITY_PRESET": {
+          "type": "STRING",
+          "value": "hidden"
+        },
+        "CMAKE_CXX_VISIBILITY_PRESET": {
+          "type": "STRING",
+          "value": "hidden"
+        }
+      }
+    },
+    {
+      "name": "arm-linux-gnueabihf",
+      "displayName": "GCC for the armhf architecture",
+      "inherits": "common",
       "toolchainFile": "${sourceDir}/cmake/arm-linux-gnueabihf.toolchain.cmake",
       "binaryDir": "${sourceDir}/$penv{DEVCONTAINER_BUILD_PREFIX}build",
       "cacheVariables": {
@@ -25,11 +40,7 @@
     {
       "name": "arm-none-linux-gnueabihf",
       "displayName": "ARM GNU Toolchain targeted to Raspberry Pi",
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      },
+      "inherits": "common",
       "toolchainFile": "${sourceDir}/cmake/arm-none-linux-gnueabihf.toolchain.cmake",
       "binaryDir": "${sourceDir}/$penv{DEVCONTAINER_BUILD_PREFIX}build",
       "cacheVariables": {
@@ -42,11 +53,7 @@
     {
       "name": "armv6-unknown-linux-gnueabihf",
       "displayName": "CLang targeted to Raspberry Pi",
-      "condition": {
-        "type": "equals",
-        "lhs": "${hostSystemName}",
-        "rhs": "Linux"
-      },
+      "inherits": "common",
       "toolchainFile": "${sourceDir}/cmake/armv6-unknown-linux-gnueabihf.toolchain.cmake",
       "binaryDir": "${sourceDir}/$penv{DEVCONTAINER_BUILD_PREFIX}build",
       "cacheVariables": {
@@ -59,25 +66,28 @@
   ],
   "buildPresets": [
     {
-      "name": "arm-linux-gnueabihf",
-      "displayName": "GCC for the armhf architecture",
-      "configurePreset": "arm-linux-gnueabihf",
+      "name": "common",
+      "hidden": true,
       "jobs": 0,
       "verbose": true
+    },
+    {
+      "name": "arm-linux-gnueabihf",
+      "displayName": "GCC for the armhf architecture",
+      "inherits": "common",
+      "configurePreset": "arm-linux-gnueabihf"
     },
     {
       "name": "arm-none-linux-gnueabihf",
       "displayName": "ARM GNU Toolchain targeted to Raspberry Pi",
-      "configurePreset": "arm-none-linux-gnueabihf",
-      "jobs": 0,
-      "verbose": true
+      "inherits": "common",
+      "configurePreset": "arm-none-linux-gnueabihf"
     },
     {
       "name": "armv6-unknown-linux-gnueabihf",
       "displayName": "CLang targeted to Raspberry Pi",
-      "configurePreset": "armv6-unknown-linux-gnueabihf",
-      "jobs": 0,
-      "verbose": true
+      "inherits": "common",
+      "configurePreset": "armv6-unknown-linux-gnueabihf"
     }
   ],
   "testPresets": [
