@@ -37,12 +37,13 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked <<-EOF
 #!/bin/bash -e
 
+dpkg --add-architecture armhf
 apt-get -qq update -y
 apt-get -qq upgrade -y --no-install-recommends
-# dpkg --add-architecture armhf
-apt-get -qq install -y --no-install-recommends xz-utils qemu-user-static cmake \
+apt-get -qq install -y --no-install-recommends xz-utils qemu-user-static cmake file \
     gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf \
-    clang lld
+    clang lld \
+    libsqlite3-0:armhf
 EOF
 
 USER vscode

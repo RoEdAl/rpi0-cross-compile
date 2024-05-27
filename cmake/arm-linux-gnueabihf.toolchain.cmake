@@ -8,10 +8,17 @@
 #
 set(CMAKE_SYSTEM_NAME               Linux)
 set(CMAKE_SYSTEM_PROCESSOR          arm)
-set(CPACK_PACKAGE_ARCHITECTURE      armhf)
 set(triple                          arm-linux-gnueabihf)
 
 file(REAL_PATH "~/sysroot" sysroot EXPAND_TILDE)
+
+set(CPACK_PACKAGE_ARCHITECTURE armhf)
+# set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS_PRIVATE_DIRS
+#     ${sysroot}/usr/local/lib/${triple}
+#     ${sysroot}/usr/local/lib
+#     ${sysroot}/usr/lib/${triple}
+#     ${sysroot}/usr/lib
+# )
 
 set(CMAKE_AR                        ${triple}-ar${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_ASM_COMPILER              ${triple}-gcc${CMAKE_EXECUTABLE_SUFFIX})
@@ -19,6 +26,7 @@ set(CMAKE_C_COMPILER                ${triple}-gcc${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_C_COMPILER_TARGET         ${triple})
 set(CMAKE_CXX_COMPILER              ${triple}-g++${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_CXX_COMPILER_TARGET       ${triple})
+set(CMAKE_STRIP                     ${triple}-strip${CMAKE_EXECUTABLE_SUFFIX})
 
 function(set_cxx_init_flags)
     list(JOIN ARGV " " C_FLAGS_INIT)

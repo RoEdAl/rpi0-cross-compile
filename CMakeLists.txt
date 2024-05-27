@@ -3,20 +3,31 @@
 #
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.21)
-PROJECT(rpi0-cross-compile C)
+PROJECT(rpi0-cross-compile VERSION 1 LANGUAGES C)
 
 INCLUDE(CheckIncludeFile)
 INCLUDE(CTest)
 
 SET(GREETING_MSG "Hello, World!" CACHE STRING "Greeting message")
 
+FIND_PACKAGE(SQLite3 3.5.9)
 CHECK_INCLUDE_FILE(stdio.h HAVE_STDIO_H)
 CONFIGURE_FILE(config.h.in include/config.h ESCAPE_QUOTES)
 
 ADD_EXECUTABLE(rpi01 main.c)
 ADD_EXECUTABLE(hello-world ALIAS rpi01)
 TARGET_INCLUDE_DIRECTORIES(rpi01 PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/include)
+IF(TARGET SQLite::SQLite3)
+    TARGET_LINK_LIBRARIES(rpi01 PRIVATE SQLite::SQLite3)
+ENDIF()
 TARGET_LINK_OPTIONS(rpi01 PRIVATE -Wl,--trace)
+
+INCLUDE(GNUInstallDirs)
+INSTALL(
+    TARGETS rpi01
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
 IF(CMAKE_CROSSCOMPILING)
     ADD_CUSTOM_COMMAND(TARGET rpi01 POST_BUILD
         COMMAND ${CMAKE_COMMAND}
@@ -35,3 +46,32 @@ IF(BUILD_TESTING)
         LABELS EXE
     )
 ENDIF()
+
+# Binary package
+
+IF(NOT CPACK_GENERATOR)
+    SET(CPACK_GENERATOR "TGZ;DEB")
+ENDIF()
+SET(CPACK_PACKAGE_DESCRIPTION "${CMAKE_PROJECT_NAME} built using ${triple} and CMake")
+SET(CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${CPACK_PACKAGE_ARCHITECTURE})
+SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Unknown Person <${CPACK_PACKAGE_CONTACT}>")
+SET(CPACK_DEBIAN_PACKAGE_GENERATE_SHLIBS_POLICY ">=")
+
+# Source package
+
+IF(NOT CPACK_SOURCE_GENERATOR)
+    SET(CPACK_SOURCE_GENERATOR "TGZ")
+ENDIF()
+
+SET(CPACK_SOURCE_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}_${CHAN_VER_FSTR}_src")
+SET(CPACK_SOURCE_IGNORE_FILES
+    "/build/" "/devcontainer-build"
+    "/install/" "/test/" "/tools/"
+    "/package/" "/devcontainer-package/"
+    "/\.vscode/" "/\.git/" "/\.gitignore" "/\.gitattributes"
+    "/hello-world.o" "/hello-world"
+    "Taskfile.yml" "Taskfile.yaml"
+    "/CMakeUserPresets.json"
+)
+
+INCLUDE(CPack)

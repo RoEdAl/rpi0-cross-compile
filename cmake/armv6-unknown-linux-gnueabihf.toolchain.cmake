@@ -10,12 +10,19 @@
 #
 set(CMAKE_SYSTEM_NAME               Linux)
 set(CMAKE_SYSTEM_PROCESSOR          arm)
-set(CPACK_PACKAGE_ARCHITECTURE      armhf)
 
 set(triple                          armv6-unknown-linux-gnueabihf)
 set(btriple                         arm-linux-gnueabihf)
 
 file(REAL_PATH "~/sysroot" sysroot EXPAND_TILDE)
+
+set(CPACK_PACKAGE_ARCHITECTURE armhf)
+# set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS_PRIVATE_DIRS
+#     ${sysroot}/usr/local/lib/${btriple}
+#     ${sysroot}/usr/local/lib
+#     ${sysroot}/usr/lib/${btriple}
+#     ${sysroot}/usr/lib
+# )
 
 set(CMAKE_C_COMPILER                clang${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_C_COMPILER_TARGET         ${triple})
@@ -23,6 +30,7 @@ set(CMAKE_C_LIBRARY_ARCHITECTURE    ${btriple})
 set(CMAKE_CXX_COMPILER              clang++${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_CXX_COMPILER_TARGET       ${triple})
 set(CMAKE_CXX_LIBRARY_ARCHITECTURE  ${btriple})
+set(CMAKE_STRIP                     ${triple}-strip${CMAKE_EXECUTABLE_SUFFIX})
 
 # CMAKE_LINKER_TYPE was introduced in version 3.29 of CMake
 set(CMAKE_LINKER_TYPE               LLD)

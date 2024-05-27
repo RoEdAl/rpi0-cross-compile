@@ -1,6 +1,8 @@
 .vscode/
 build/
 devcontainer-build/
+package/
+devcontainer-package/
 install/
 package/
 hello-world
