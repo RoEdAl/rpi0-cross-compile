@@ -8,6 +8,7 @@ package/
 hello-world
 hello-world.o
 qemu*.core
+CMakeUserPresets.json
 Taskfile.yaml
 Taskfile.yml
 
