@@ -30,17 +30,17 @@
           "type": "PATH",
           "value": "/usr"
         },
-        "CPACK_PACKAGE_VENDOR": {
-          "type": "STRING",
-          "value": "Undefined"
-        },
         "CPACK_SET_DESTDIR": {
           "type": "BOOL",
           "value": true
         },
-        "CPACK_RESOURCE_FILE_LICENSE": {
-          "type": "FILEPATH",
-          "value": "${sourceDir}/LICENSE"
+        "CPACK_PACKAGE_VENDOR": {
+          "type": "STRING",
+          "value": "Undefined"
+        },
+        "CPACK_PACKAGE_MAINTAINER": {
+          "type": "STRING",
+          "value": "Anonymous"
         },
         "CPACK_PACKAGE_CONTACT": {
           "type": "STRING",
@@ -49,30 +49,6 @@
         "CPACK_DEBIAN_PACKAGE_DEBUG": {
           "type": "BOOL",
           "value": false
-        },
-        "CPACK_DEBIAN_FILE_NAME": {
-          "type": "STRING",
-          "value": "DEB-DEFAULT"
-        },
-        "CPACK_DEBIAN_PACKAGE_SECTION": {
-          "type": "STRING",
-          "value": "misc"
-        },
-        "CPACK_DEBIAN_PACKAGE_SHLIBDEPS": {
-          "type": "BOOL",
-          "value": true
-        },
-        "CPACK_PACKAGE_CHECKSUM": {
-          "type": "STRING",
-          "value": "SHA256"
-        },
-        "CPACK_STRIP_FILES": {
-          "type": "BOOL",
-          "value": true
-        },
-        "CPACK_THREADS": {
-          "type": "STRING",
-          "value": "0"
         },
         "CPACK_PACKAGE_DIRECTORY": {
           "type": "PATH",

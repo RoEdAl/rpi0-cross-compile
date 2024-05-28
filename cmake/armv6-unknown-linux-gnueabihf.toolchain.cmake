@@ -25,12 +25,28 @@ set(CPACK_PACKAGE_ARCHITECTURE armhf)
 # )
 
 set(CMAKE_C_COMPILER                clang${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_C_COMPILER_AR             ${btriple}-ar${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_C_COMPILER_RANLIB         ${btriple}-ranlib${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_C_COMPILER_TARGET         ${triple})
 set(CMAKE_C_LIBRARY_ARCHITECTURE    ${btriple})
 set(CMAKE_CXX_COMPILER              clang++${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_CXX_COMPILER_AR           ${btriple}-ar${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_CXX_COMPILER_RANLIB       ${btriple}-ranlib${CMAKE_EXECUTABLE_SUFFIX})
 set(CMAKE_CXX_COMPILER_TARGET       ${triple})
 set(CMAKE_CXX_LIBRARY_ARCHITECTURE  ${btriple})
-set(CMAKE_STRIP                     ${triple}-strip${CMAKE_EXECUTABLE_SUFFIX})
+
+#
+# Use utilities from binutils-arm-linux-gnueabihf
+#
+set(CMAKE_ADDR2LINE                 ${btriple}-addr2line${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_AR                        ${btriple}-ar${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_NM                        ${btriple}-nm${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_OBJCOPY                   ${btriple}-objcopy${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_OBJDUMP                   ${btriple}-objdump${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_RANLIB                    ${btriple}-ranlib${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_READELF                   ${btriple}-readelf${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_STRIP                     ${btriple}-strip${CMAKE_EXECUTABLE_SUFFIX})
+set(COVERAGE_COMMAND                ${btriple}-gcov${CMAKE_EXECUTABLE_SUFFIX})
 
 # CMAKE_LINKER_TYPE was introduced in version 3.29 of CMake
 set(CMAKE_LINKER_TYPE               LLD)

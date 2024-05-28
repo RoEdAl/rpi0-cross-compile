@@ -4,6 +4,7 @@
 */
 
 // clang-format off
+#cmakedefine USE_SHARED_LIBGCC
 #cmakedefine SQLite3_FOUND
 #cmakedefine HAVE_STDIO_H
 #cmakedefine GREETING_MSG "@GREETING_MSG@"
