@@ -61,9 +61,27 @@
       }
     },
     {
+      "name": "devcontainer",
+      "hidden": true,
+      "condition": {
+        "type": "inList",
+        "string": "$penv{DEVCONTAINER}",
+        "list": [
+          "debian"
+        ]
+      },
+      "generator": "Ninja",
+      "warnings": {
+        "unusedCli": false
+      }
+    },
+    {
       "name": "arm-linux-gnueabihf",
       "displayName": "GCC for the armhf architecture",
-      "inherits": "common",
+      "inherits": [
+        "devcontainer",
+        "common"
+      ],
       "toolchainFile": "${sourceDir}/cmake/arm-linux-gnueabihf.toolchain.cmake",
       "binaryDir": "${sourceDir}/$penv{DEVCONTAINER_BUILD_PREFIX}build",
       "cacheVariables": {
@@ -76,7 +94,10 @@
     {
       "name": "arm-none-linux-gnueabihf",
       "displayName": "ARM GNU Toolchain targeted to Raspberry Pi",
-      "inherits": "common",
+      "inherits": [
+        "devcontainer",
+        "common"
+      ],
       "toolchainFile": "${sourceDir}/cmake/arm-none-linux-gnueabihf.toolchain.cmake",
       "binaryDir": "${sourceDir}/$penv{DEVCONTAINER_BUILD_PREFIX}build",
       "cacheVariables": {
@@ -89,7 +110,10 @@
     {
       "name": "armv6-unknown-linux-gnueabihf",
       "displayName": "CLang targeted to Raspberry Pi",
-      "inherits": "common",
+      "inherits": [
+        "devcontainer",
+        "common"
+      ],
       "toolchainFile": "${sourceDir}/cmake/armv6-unknown-linux-gnueabihf.toolchain.cmake",
       "binaryDir": "${sourceDir}/$penv{DEVCONTAINER_BUILD_PREFIX}build",
       "cacheVariables": {

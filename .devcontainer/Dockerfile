@@ -41,7 +41,7 @@ dpkg --add-architecture armhf
 apt-get -qq update -y
 apt-get -qq upgrade -y --no-install-recommends
 apt-get -qq install -y --no-install-recommends xz-utils qemu-user-static \
-    lintian cmake file \
+    lintian cmake ninja-build file \
     gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf \
     clang lld \
     libsqlite3-0:armhf
