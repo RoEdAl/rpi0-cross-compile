@@ -1,15 +1,16 @@
 # [DEMO] Building executable for *Raspberry Pi* Zero/1B/1B+ using `gcc-arm-linux-gnueabihf` cross‑compiler
 
-This is demonstration of compiling executable for *Raspberry Pi* *Zero*/*1B*/*1B+* using *standard* `gcc-arm-linux-gnueabihf` cross‑compiler on Debian or Ubuntu.
+This is demonstration of building executable for *Raspberry Pi* *Zero*/*1B*/*1B+* using *standard* `gcc-arm-linux-gnueabihf` cross‑compiler on Debian or Ubuntu.
 
 > [!IMPORTANT]
 > This demo is intended to use in *dockerized* environment. In *VS Code* just reopen this repo in container. `devcontainer.json` is provided.
 
-As a bonus this code also show you:
+As a bonus this *CMake* project also show you:
 
 * How to use external `arm-none-linux-gnueabihf` cross-compiler from [ARM GNU Toolchain](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
 if you need a more recent version of GCC.
 * How to properly use *CLang* compiler (`armv6-unknown-linux-gnueabihf` target) to generate binaries for *Raspberry Pi*.
+* How to create Debian package using *CPack*.
 
 ## Background
 
@@ -21,7 +22,7 @@ You can use flags described [here](https://gist.github.com/fm4dd/c663217935dc17f
 arm-linux-gnueabihf-gcc -mcpu=arm1176jzf-s -mfloat-abi=hard -mfpu=vfp -o hello-world hello-world.c
 ```
 
-but compiler generates error:
+but compiler generates an error:
 
 ```sh
 hello-world.c: In function ‘main’:
@@ -95,7 +96,7 @@ File Attributes
 The core difference is `Tag_CPU_arch`. `v6` is an expected value. So binary has been created for wrong CPU architecture.
 Generated code works fine on newer models of *Raspberry Pi* but it is incompatible with *RPi Zero/1B/1B+* models with older CPU (SoC).
 
-This demo code demostrates how to build binary with proper CPU architecture. In general you have to:
+This demo code shows how to build binary with proper (`v6`) CPU architecture. In general you have to:
 
 * prepare *sysroot* from *Raspberry Pi OS*,
 * fix *startup files*.
