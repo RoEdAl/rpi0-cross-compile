@@ -30,6 +30,10 @@
           "type": "PATH",
           "value": "/usr"
         },
+        "CPACK_INSTALL_DEFAULT_DIRECTORY_PERMISSIONS": {
+          "type": "STRING",
+          "value": "OWNER_READ;OWNER_WRITE;OWNER_EXECUTE;GROUP_READ;GROUP_EXECUTE;WORLD_READ;WORLD_EXECUTE"
+        },
         "CPACK_SET_DESTDIR": {
           "type": "BOOL",
           "value": true
